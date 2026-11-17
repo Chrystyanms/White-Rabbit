@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Coelho Branco Academy</title>
+<meta name="description" content="Aprenda cibersegurança do zero, com trilha semanal gratuita, provas e comunidade. Seu progresso fica só no seu navegador.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#000;--panel:#03130a;--line:#0e3b21;--g:#00ff66;--g2:#17c964;--dim:#82b898;--txt:#d9ffe7;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--txt);font:500 17px/1.5 Rajdhani,system-ui,sans-serif}
+h1,h2,h3,.mono{font-family:"Share Tech Mono",ui-monospace,monospace;font-weight:400}
+a{color:var(--g)}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--g);outline-offset:2px}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 48px}
+header{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+#rain{position:absolute;inset:0;width:100%;height:100%;opacity:.35;pointer-events:none;z-index:0}
+.hero{position:relative;padding:28px 16px 22px;max-width:760px;margin:0 auto}
+.hero h1{font-size:30px;margin:0 0 4px;color:var(--g);text-shadow:0 0 14px rgba(0,255,102,.55)}
+.hero p{margin:0;color:var(--dim)}
+nav{position:relative;z-index:2;-webkit-overflow-scrolling:touch;display:flex;gap:6px;overflow-x:auto;padding:12px 16px;max-width:760px;margin:0 auto}
+nav button{flex:0 0 auto;background:none;border:1px solid var(--line);color:var(--dim);font:inherit;padding:11px 16px;border-radius:4px;cursor:pointer}
+nav button[aria-current=true]{background:var(--g);color:#001a0a;border-color:var(--g)}
+h2{font-size:22px;color:var(--g);margin:26px 0 10px}
+h3{font-size:18px;margin:0 0 6px;color:var(--txt)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:14px;margin:0 0 12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.stat b{display:block;font:400 28px "Share Tech Mono",monospace;color:var(--g)}
+.stat span{color:var(--dim);font-size:15px}
+.ringbox{display:flex;align-items:center;gap:18px}
+.ring{width:124px;height:124px;flex:0 0 auto}
+.ring text{font:400 26px "Share Tech Mono",monospace;fill:var(--g)}
+.bar{height:8px;background:#06210f;border-radius:4px;overflow:hidden;margin:6px 0}
+.bar i{display:block;height:100%;background:var(--g);box-shadow:0 0 10px var(--g);width:0;transition:width .4s}
+.row{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line)}
+.row:first-of-type{border-top:0}
+.row input{width:26px;height:26px;accent-color:var(--g);flex:0 0 auto;margin-top:0}
+button,label,input,a{touch-action:manipulation;-webkit-tap-highlight-color:rgba(0,255,102,.25)}
+.row label{padding:2px 0}
+.row label{flex:1;cursor:pointer}
+.row.done label{color:var(--dim);text-decoration:line-through}
+.meta{color:var(--dim);font-size:15px}
+.tag{display:inline-block;border:1px solid var(--g2);color:var(--g);border-radius:3px;padding:0 7px;font-size:14px;margin-left:6px}
+.lock{opacity:.6}
+.lock .tag{border-color:var(--line);color:var(--dim)}
+button.go{background:var(--g);color:#001a0a;border:0;border-radius:4px;padding:9px 16px;font:inherit;font-weight:600;cursor:pointer}
+button.ghost{background:none;border:1px solid var(--line);color:var(--dim);border-radius:4px;padding:7px 12px;font:inherit;cursor:pointer}
+.note{border-left:3px solid var(--g);padding:6px 12px;color:var(--dim);margin:14px 0}
+.ft{max-width:760px;margin:0 auto;padding:8px 16px 40px;color:var(--dim);font-size:15px}
+#ck{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:0 12px calc(12px + env(safe-area-inset-bottom,0px))}
+.ckb{max-width:760px;margin:0 auto;background:var(--panel);border:1px solid var(--g2);border-radius:6px;padding:12px;box-shadow:0 0 18px rgba(0,255,102,.25)}
+.ckb div{margin-top:10px;display:flex;gap:8px}
+a.go{display:inline-block;background:var(--g);color:#001a0a;border-radius:4px;padding:10px 16px;font-weight:600;text-decoration:none}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<header>
+<canvas id="rain" aria-hidden="true"></canvas>
+<div class="hero">
+<h1>Coelho Branco Academy</h1>
+<p>Cibersegurança do zero ao profissional. Siga o coelho branco, uma aula por vez.</p>
+</div>
+<nav id="tabs"></nav>
+</header>
+<main class="wrap" id="view"></main>
+<footer class="ft"><a href="sobre.html">Sobre</a> · <a href="contato.html">Contato</a> · <a href="privacidade.html">Privacidade</a><span id="ap"></span></footer>
+<div id="ck"></div>
+
+<script>
+var K="coelho-branco-v1",S={};
+try{S=JSON.parse(localStorage.getItem(K)||"{}")}catch(e){}
+function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
+
+/* Para liberar uma nova semana: troque locked:true por days:[...] na semana desejada. */
+var WEEKS=[
+{n:1,t:"Preparação do ambiente",days:[
+{d:"Segunda",i:[
+["w1a","Conferir se a virtualização (VT-x ou AMD-V) está ativa na BIOS",20,""],
+["w1b","Instalar o VirtualBox",20,"https://www.virtualbox.org/wiki/Downloads"]]},
+{d:"Terça",i:[
+["w1c","Baixar a VM pronta do Kali Linux e importar no VirtualBox",60,"https://www.kali.org/get-kali/#kali-virtual-machines"],
+["w1d","Criar um snapshot chamado “Limpo” da VM",10,""]]},
+{d:"Quarta",i:[
+["w1e","Criar a conta gratuita no TryHackMe",10,"https://tryhackme.com/"],
+["w1f","Pre Security: introdução à cibersegurança",90,"https://tryhackme.com/path/outline/presecurity"]]},
+{d:"Quinta",i:[
+["w1g","Pre Security: como a web funciona",90,"https://tryhackme.com/path/outline/presecurity"],
+["w1h","Primeiros comandos no Kali: pwd, ls, cd, cat",45,"https://linuxjourney.com/"]]},
+{d:"Sexta (só prática)",i:[
+["w1i","Linux Journey: primeiras lições de Command Line",60,"https://linuxjourney.com/"],
+["w1j","OverTheWire Bandit: níveis 0 a 3",60,"https://overthewire.org/wargames/bandit/"]]},
+{d:"Sábado (revisão)",i:[
+["w1k","Instalar o Obsidian e criar o caderno de estudos",20,"https://obsidian.md/"],
+["w1l","Escrever seu primeiro writeup, com prints e comandos usados",90,""]]}
+]},
+{n:2,t:"Linux básico",locked:true,topics:"Linux Journey, Bandit 0 a 10, permissões, find e grep"},
+{n:3,t:"Linux intermediário",locked:true,topics:"Bandit 10 a 20, usuários, pacotes, serviços, bash"},
+{n:4,t:"Redes I",locked:true,topics:"Modelo OSI, IP, TCP e UDP, DNS, ping e traceroute"},
+{n:5,t:"Redes II",locked:true,topics:"Wireshark, ARP, 3-way handshake, ICMP, tcpdump"},
+{n:6,t:"Windows e fechamento",locked:true,topics:"Windows Fundamentals, prompt de comando, revisão"}
+];
+
+function W(a){return a.map(function(r){return{d:r[0],i:[[r[1],r[2],r[3],r[4]]]}})}
+var LJ="https://linuxjourney.com/",BN="https://overthewire.org/wargames/bandit/",TL="https://linuxcommand.org/tlcl.php",PM="https://www.professormesser.com/",WS="https://www.wireshark.org/docs/",TH="https://tryhackme.com/";
+WEEKS[1].days=W([["Segunda","w2a","Linux Journey: Command Line e navegação pelo sistema",120,LJ],["Terça","w2b","Bandit: níveis 0 a 5",120,BN],["Quarta","w2c","Permissões: chmod, chown, usuários e grupos",120,LJ],["Quinta","w2d","Buscar com find e grep (Guia Foca Linux)",120,"https://guiafoca.org/"],["Sexta (prática)","w2e","Bandit: níveis 6 a 10",120,BN],["Sábado (revisão)","w2f","Resumo no Obsidian: 15 comandos que você domina",60,""]]);
+WEEKS[2].days=W([["Segunda","w3a","Bandit: níveis 10 a 14",120,BN],["Terça","w3b","Pipes e redirecionamento: grep, awk, cut e sed",120,TL],["Quarta","w3c","Usuários, pacotes (apt) e serviços (systemctl)",120,LJ],["Quinta","w3d","Rede no Linux: ip, ss e curl",120,LJ],["Sexta (prática)","w3e","Bandit: níveis 15 a 20",120,BN],["Sábado (revisão)","w3f","Seu primeiro script bash: pingar uma lista de IPs",90,TL]]);
+WEEKS[3].days=W([["Segunda","w4a","Professor Messer: modelo OSI e TCP/IP",120,PM],["Terça","w4b","Endereçamento IP e sub-redes",120,PM],["Quarta","w4c","TCP, UDP e portas mais comuns",120,PM],["Quinta","w4d","DNS: nslookup e dig",90,PM],["Sexta (prática)","w4e","ping, traceroute e nslookup no Kali",90,""],["Sábado (revisão)","w4f","Resumo: o que acontece quando você abre um site",60,""]]);
+WEEKS[4].days=W([["Segunda","w5a","Abrir o Wireshark e capturar seu próprio tráfego",120,WS],["Terça","w5b","Identificar ARP e ICMP na captura",120,WS],["Quarta","w5c","Encontrar o 3-way handshake do TCP",120,WS],["Quinta","w5d","DNS e HTTP no Wireshark",120,WS],["Sexta (prática)","w5e","tcpdump básico",90,"https://www.tcpdump.org/manpages/tcpdump.1.html"],["Sábado (revisão)","w5f","Writeup: uma captura comentada pacote a pacote",90,""]]);
+WEEKS[5].days=W([["Segunda","w6a","Windows Fundamentals 1 (TryHackMe)",120,TH],["Terça","w6b","Windows Fundamentals 2 e 3 (TryHackMe)",120,TH],["Quarta","w6c","Prompt de comando: ipconfig, netstat e tasklist",90,""],["Quinta","w6d","Revisão de Linux: refazer o Bandit sem consultar",120,BN],["Sexta (prática)","w6e","Revisão de redes: nova captura no Wireshark",120,WS],["Sábado (fechamento)","w6f","Organizar o portfólio de writeups e fazer a prova final",90,""]]);
+var MS=[
+{id:"m1",a:3,t:"Marco 1: Linux na ponta dos dedos",art:"<p>No Linux, quase tudo é arquivo: configurações, dispositivos e processos. Quem domina o terminal domina o sistema, e você vai passar a maior parte do tempo em pentest nele.</p><p>Três ideias para aprofundar. Permissões: o chmod 640 dá leitura e escrita ao dono, só leitura ao grupo e nada aos outros. Erros de permissão são falhas comuns em servidores, e a escalação de privilégios costuma começar por eles. Pipes: grep, awk, cut e sed filtram a saída de um comando e passam para o seguinte, o que permite analisar logs e resultados de scans. Serviços: cada porta aberta é um programa rodando, e saber listar e parar serviços é a base de atacar e de defender.</p><p>Para aprofundar: leia no livro The Linux Command Line os capítulos sobre permissões, pipelines e shell scripts, e refaça o Bandit sem consultar nada.</p>",qz:[["Qual comando lista as portas e serviços em escuta?",["pwd","ss -tulpn","chmod 777","cat /etc"],1],["O que significa chmod 640 arquivo?",["Todos podem tudo","Só o grupo escreve","Dono lê e escreve, grupo só lê, outros nada","Só o dono executa"],2],["Qual comando mostra só as linhas com a palavra erro de um arquivo?",["cd erro","ls erro","grep erro arquivo","chown erro"],2],["O que faz o pipe (|)?",["Apaga o arquivo","Muda permissões","Cria um usuário","Envia a saída de um comando como entrada do próximo"],3]]},
+{id:"m2",a:5,t:"Marco 2: Como a rede conversa",art:"<p>Quando você abre um site, o DNS traduz o nome em um IP, o TCP abre a conexão com o 3-way handshake (SYN, SYN-ACK, ACK) e o HTTP pede a página. Você viu cada passo no Wireshark.</p><p>Isso importa porque um port scan é só enviar SYN e observar a resposta: SYN-ACK significa porta aberta e RST significa porta fechada. O que você capturou agora é o que o Nmap faz na Etapa 3. Entender o protocolo também mostra por que firewalls e IDS bloqueiam certos padrões.</p><p>Para aprofundar: capture o acesso a um site e anote cada pacote, e leia no livro do Nmap (nmap.org/book) o capítulo sobre técnicas de varredura.</p>",qz:[["O 3-way handshake do TCP é:",["ACK, ACK, FIN","DNS, HTTP, TCP","SYN, SYN-ACK, ACK","PING, PONG, ACK"],2],["Qual protocolo traduz nome em IP?",["ARP","DNS","ICMP","FTP"],1],["O ping usa qual protocolo?",["UDP 53","HTTP","ICMP","SSH"],2],["Uma resposta RST a um SYN indica:",["Porta aberta","Porta fechada","DNS falhou","Firewall desligado"],1]]},
+{id:"m3",a:6,t:"Marco 3: Base concluída (prova final da Etapa 1)",art:"<p>Você fechou a base: Linux, redes e Windows. Pentest é método: reconhecer, enumerar, explorar e documentar. O relatório vale tanto quanto a invasão, por isso seus writeups já são o começo do portfólio.</p><p>Antes da Etapa 2 (Python e criptografia), confirme três coisas: você refaz o Bandit sem consultar, explica uma captura do Wireshark e mantém o caderno atualizado. E lembre: só se testa o que tem autorização por escrito ou o laboratório próprio.</p>",qz:[["Qual é a primeira fase de um pentest?",["Exploração","Relatório","Reconhecimento","Limpeza"],2],["Quando é legal testar um sistema?",["Quando o site parece inseguro","Com autorização por escrito ou em laboratório próprio","Se for de um conhecido","Sempre que não causar dano"],1],["Qual comando do Windows mostra as conexões de rede?",["grep","chmod","pwd","netstat"],3],["Por que fazer writeups?",["Para documentar o que fez e formar portfólio","Para o sistema funcionar","Para ficar anônimo","Não serve para nada"],0]]}
+];
+var INST=[
+["i1","Conferir os requisitos do computador","Agora","8 GB de RAM no mínimo (16 GB é o ideal), 60 GB livres no disco e processador com virtualização ativada na BIOS.",""],
+["i2","VirtualBox","Semana 1","Programa gratuito que cria computadores virtuais. É onde o Kali vai rodar, isolado do seu sistema.","https://www.virtualbox.org/wiki/Downloads"],
+["i3","Kali Linux (VM pronta)","Semana 1","O sistema de segurança que você vai usar o curso inteiro. Baixe a imagem para VirtualBox. Reserve 4 GB de RAM e 2 CPUs para ela.","https://www.kali.org/get-kali/#kali-virtual-machines"],
+["i4","Obsidian","Semana 1","Caderno de anotações em Markdown. Guarde seus comandos e writeups aqui.","https://obsidian.md/"],
+["i5","Visual Studio Code","Semana 1","Editor para escrever scripts. Use no seu computador principal.","https://code.visualstudio.com/"],
+["i6","Wireshark","Semana 5","Analisador de tráfego de rede. Já vem no Kali, então a instalação no seu computador é opcional.","https://www.wireshark.org/download.html"],
+["i7","Python 3","Etapa 2","Linguagem principal para criar ferramentas. Já vem no Kali.","https://www.python.org/downloads/"],
+["i8","Git","Etapa 2","Controle de versão. Serve para guardar seus scripts e portfólio no GitHub.","https://git-scm.com/downloads"]
+];
+
+function done(id){return !!S[id]}
+function pct(a,b){return b?Math.round(a/b*100):0}
+function weekIds(w){var r=[];(w.days||[]).forEach(function(d){d.i.forEach(function(x){r.push(x[0])})});return r}
+function cnt(ids){return ids.filter(done).length}
+function allIds(){var r=[];WEEKS.forEach(function(w){r=r.concat(weekIds(w))});return r}
+function bar(p){return '<div class="bar"><i style="width:'+p+'%"></i></div>'}
+function item(x){
+  var d=done(x[0]);
+  return '<div class="row'+(d?' done':'')+'"><input type="checkbox" id="'+x[0]+'" data-id="'+x[0]+'"'+(d?' checked':'')+'><label for="'+x[0]+'">'+x[1]+
+  '<div class="meta">'+x[2]+' min'+(x[3]?' · <a href="'+x[3]+'" target="_blank" rel="noopener">abrir link</a>':'')+'</div></label></div>';
+}
+function weekCard(w){
+  if(w.locked)return '<div class="card lock"><h3>Semana '+w.n+': '+w.t+'<span class="tag">em breve</span></h3><div class="meta">'+w.topics+'</div></div>';
+  var ids=weekIds(w),p=pct(cnt(ids),ids.length);
+  return '<div class="card"><h3>Semana '+w.n+': '+w.t+'<span class="tag">'+p+'%</span></h3>'+bar(p)+'</div>';
+}
+
+var TAB=0,TABS=["Painel","Semana atual","Trilha","Marcos","Comunidade","Perfil","Instalação"];
+
+function pPainel(){
+  var ids=allIds(),c=cnt(ids),p=pct(c,ids.length);
+  var ic=cnt(INST.map(function(x){return x[0]})),ip=pct(ic,INST.length);
+  var next="";
+  WEEKS.forEach(function(w){(w.days||[]).forEach(function(d){d.i.forEach(function(x){if(!next&&!done(x[0]))next='<b>'+d.d+':</b> '+x[1]})})});
+  var R=52,C=2*Math.PI*R;
+  var ring='<svg class="ring" viewBox="0 0 124 124" role="img" aria-label="Progresso geral '+p+' por cento"><circle cx="62" cy="62" r="'+R+'" fill="none" stroke="#06210f" stroke-width="10"/><circle cx="62" cy="62" r="'+R+'" fill="none" stroke="#00ff66" stroke-width="10" stroke-linecap="round" stroke-dasharray="'+C+'" stroke-dashoffset="'+(C*(1-p/100))+'" transform="rotate(-90 62 62)" style="filter:drop-shadow(0 0 5px #00ff66)"/><text x="62" y="71" text-anchor="middle">'+p+'%</text></svg>';
+  return '<h2>Painel</h2><div class="card ringbox">'+ring+'<div><h3>Progresso na Etapa 1</h3><div class="meta">'+c+' de '+ids.length+' tarefas concluídas</div></div></div>'+
+  '<div class="grid"><div class="card stat"><b>'+WEEKS.filter(function(w){return !w.locked}).length+'/6</b><span>semanas liberadas da Etapa 1</span></div>'+
+  '<div class="card stat"><b>'+ic+'/'+INST.length+'</b><span>programas instalados</span></div></div>'+
+  '<div class="card"><h3>Próxima tarefa</h3><div>'+(next||'Tudo concluído por enquanto. Volte quando a próxima semana for liberada.')+'</div></div>'+
+  '<div class="note">Cada semana libera sozinha quando você conclui a anterior. Nos marcos importantes, a aba Marcos libera um artigo e uma prova.</div>'+
+  (SITE.apoia?'<div class="card"><h3>Apoie o projeto</h3><div class="meta">O conteúdo é gratuito. Se ele ajudou você, considere apoiar no Apoia.se.</div><p><a class=go href="'+SITE.apoia+'" target="_blank" rel="noopener">Apoiar no Apoia.se</a></p></div>':'')+
+  '<button class="ghost" id="reset">Zerar meu progresso</button>';
+}
+function pSemana(){
+  var w=null;WEEKS.forEach(function(x){if(!x.locked)w=x});
+  var ids=weekIds(w),p=pct(cnt(ids),ids.length);
+  var h='<h2>Semana '+w.n+': '+w.t+'</h2><div class="card"><div class="meta">Progresso da semana: '+p+'%</div>'+bar(p)+'<div class="meta">Rotina: 1h de teoria, 1h de prática, 10 min de anotações. Domingo é folga.</div></div>';
+  w.days.forEach(function(d){h+='<div class="card"><h3>'+d.d+'</h3>'+d.i.map(item).join('')+'</div>'});
+  return h;
+}
+function pTrilha(){
+  var h='<h2>Etapa 1: Base</h2>'+WEEKS.map(weekCard).join('');
+  var E=[["Etapa 2: Programação e criptografia","Python, algoritmos, automação, hashes e senhas. Cerca de 8 a 10 semanas."],
+  ["Etapa 3: Recon e pentest de infraestrutura","Nmap, enumeração, análise de vulnerabilidades, Metasploit, CTFs."],
+  ["Etapa 4: Web e Active Directory","PortSwigger Academy, OWASP, pós-exploração Linux e Windows."],
+  ["Etapa 5: Especialização","Assembly, exploits, malware, evasão de defesas e certificações."]];
+  h+='<h2>Próximas etapas</h2>'+E.map(function(e){return '<div class="card lock"><h3>'+e[0]+'<span class="tag">bloqueada</span></h3><div class="meta">'+e[1]+'</div></div>'}).join('');
+  return h+'<div class="note">Pratique só em laboratórios seus ou em plataformas autorizadas. Testar sistemas de terceiros sem permissão é crime.</div>';
+}
+function pInst(){
+  var ic=cnt(INST.map(function(x){return x[0]})),p=pct(ic,INST.length);
+  return '<h2>Instalação</h2><div class="card"><div class="meta">Ambiente pronto: '+p+'%</div>'+bar(p)+'</div><div class="card">'+
+  INST.map(function(x){
+    var d=done(x[0]);
+    return '<div class="row'+(d?' done':'')+'"><input type="checkbox" id="'+x[0]+'" data-id="'+x[0]+'"'+(d?' checked':'')+'><label for="'+x[0]+'">'+x[1]+'<span class="tag">'+x[2]+'</span><div class="meta">'+x[3]+(x[4]?' <a href="'+x[4]+'" target="_blank" rel="noopener">baixar</a>':'')+'</div></label></div>';
+  }).join('')+'</div>';
+}
+/* Preencha: apoia = link da sua página no Apoia.se; adsense = ID do editor, no formato ca-pub-XXXXXXXXXXXXXXXX */
+var SITE={apoia:"",adsense:""};
+function consent(){try{return localStorage.getItem("cb-consent")}catch(e){return null}}
+function loadAds(){if(!SITE.adsense||window.adsOn)return;window.adsOn=1;var s=document.createElement("script");s.async=true;s.crossOrigin="anonymous";s.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client="+SITE.adsense;document.head.appendChild(s)}
+function setup(){
+  var ap=document.getElementById("ap");
+  if(SITE.apoia&&ap)ap.innerHTML=' · <a href="'+SITE.apoia+'" target="_blank" rel="noopener">Apoie no Apoia.se</a>';
+  var c=consent();
+  if(c==="yes"){loadAds();return}
+  if(!SITE.adsense||c==="no")return;
+  document.getElementById("ck").innerHTML='<div class=ckb>Este site usa anúncios do Google, que podem usar cookies. <a href=privacidade.html>Saiba mais</a><div><button class=go id=ckY>Aceitar</button><button class=ghost id=ckN>Recusar</button></div></div>';
+}
+/* Preencha com os dados gerados em giscus.app: repo no formato usuario/repositorio, repoId e categoryId */
+var GC={repo:"",repoId:"",category:"Comunidade",categoryId:""};
+var CT="geral",THR=[["geral","Geral e dúvidas"],["semana-1","Semana 1"],["semana-2","Semana 2"],["semana-3","Semana 3"],["semana-4","Semana 4"],["semana-5","Semana 5"],["semana-6","Semana 6"]];
+function pCom(){
+  return '<h2>Comunidade</h2><div class="card"><h3>Regras da casa</h3><div class="meta">Aqui todos se ajudam a estudar. Para manter o espaço seguro:<br>1. Fale só de laboratórios seus ou de plataformas de treino (TryHackMe, Hack The Box, OverTheWire).<br>2. Pedidos para invadir sistemas, contas ou redes de terceiros serão apagados.<br>3. Não publique senhas, documentos, IPs reais, telefones ou outros dados pessoais.<br>4. Seja gentil: todo mundo começou do zero.</div></div>'+
+  '<div class="card"><div class="meta">Este site não pede cadastro. Seu progresso fica só no seu navegador. Para comentar, o sistema de comentários usa uma conta gratuita do GitHub. Veja como tratamos dados na <a href=privacidade.html>Política de Privacidade</a>.</div></div>'+
+  '<div class="card"><div class="meta">Escolha o assunto:</div><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">'+THR.map(function(t){return '<button class="'+(t[0]===CT?'go':'ghost')+'" data-th="'+t[0]+'">'+t[1]+'</button>'}).join('')+'</div></div><div id="gc"></div>';
+}
+function loadComments(){
+  var c=document.getElementById("gc");if(!c)return;
+  if(!GC.repoId||!GC.categoryId){c.innerHTML='<div class="note">Os comentários estão sendo configurados. Volte em breve.</div>';return}
+  var s=document.createElement("script");s.src="https://giscus.app/client.js";
+  var a={"data-repo":GC.repo,"data-repo-id":GC.repoId,"data-category":GC.category,"data-category-id":GC.categoryId,"data-mapping":"specific","data-term":CT,"data-strict":"1","data-reactions-enabled":"1","data-emit-metadata":"0","data-input-position":"top","data-theme":"dark","data-lang":"pt"};
+  for(var k in a)s.setAttribute(k,a[k]);
+  s.crossOrigin="anonymous";s.async=true;c.appendChild(s);
+}
+function lockCalc(){WEEKS.forEach(function(w,i){w.locked=i>0&&!weekIds(WEEKS[i-1]).every(done)})}
+function pMarcos(){
+  return '<h2>Marcos</h2>'+MS.map(function(m,i){
+    if(!weekIds(WEEKS[m.a-1]).every(done))return '<div class="card lock"><h3>'+m.t+'<span class="tag">bloqueado</span></h3><div class="meta">Libera ao concluir a Semana '+m.a+'.</div></div>';
+    var s=S["s_"+m.id];
+    return '<div class="card"><h3>'+m.t+(s!==undefined?'<span class="tag">'+s+'/'+m.qz.length+(s>=3?' aprovado':' refazer')+'</span>':'')+'</h3>'+m.art+'<h3 style="margin-top:14px">Prova</h3>'+m.qz.map(function(q,j){return '<div class="meta" style="margin-top:10px">'+(j+1)+'. '+q[0]+'</div>'+q[1].map(function(o,k){return '<div class="row"><input type="radio" name="q'+i+'_'+j+'" id="q'+i+'_'+j+'_'+k+'" value="'+k+'"><label for="q'+i+'_'+j+'_'+k+'">'+o+'</label></div>'}).join('')}).join('')+'<button class="go" data-q="'+i+'" style="margin-top:12px">Corrigir prova</button></div>';
+  }).join('');
+}
+function pPerfil(){
+  var ids=allIds(),ap=MS.filter(function(m){return S["s_"+m.id]>=3}).length;
+  return '<h2>Perfil</h2><div class="card"><h3>Seu nome</h3><input id="nm" maxlength="40" placeholder="Digite seu nome" value="'+(S._n||"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;")+'" style="width:100%;padding:10px;background:#000;color:var(--txt);border:1px solid var(--line);border-radius:4px;font:inherit"><button class="go" id="savep" style="margin-top:10px">Salvar nome</button></div><div class="grid"><div class="card stat"><b>'+pct(cnt(ids),ids.length)+'%</b><span>da Etapa 1 concluída</span></div><div class="card stat"><b>'+ap+'/'+MS.length+'</b><span>provas aprovadas</span></div></div>';
+}
+function render(){lockCalc();var g=document.querySelector(".hero p");g.textContent=S._n?"Bem-vindo, "+S._n+". Siga o coelho branco, uma aula por vez.":"Cibersegurança do zero ao profissional. Siga o coelho branco, uma aula por vez.";
+  var t=document.getElementById("tabs");
+  t.innerHTML=TABS.map(function(n,i){return '<button data-t="'+i+'"'+(i===TAB?' aria-current="true"':'')+'>'+n+'</button>'}).join('');
+  document.getElementById("view").innerHTML=[pPainel,pSemana,pTrilha,pMarcos,pCom,pPerfil,pInst][TAB]();if(TAB===4)loadComments();
+}
+document.addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;
+  if(b.dataset.t){TAB=+b.dataset.t;render();window.scrollTo(0,0)}
+  if(b.dataset.th){CT=b.dataset.th;render()}
+  if(b.id==="ckY"||b.id==="ckN"){try{localStorage.setItem("cb-consent",b.id==="ckY"?"yes":"no")}catch(x){}document.getElementById("ck").innerHTML="";if(b.id==="ckY")loadAds()}
+  if(b.dataset.q!==undefined){var m=MS[+b.dataset.q],s=0;m.qz.forEach(function(q,j){var r=document.querySelector('input[name="q'+b.dataset.q+'_'+j+'"]:checked');if(r&&+r.value===q[2])s++});S["s_"+m.id]=s;save();render()}
+  if(b.id==="savep"){S._n=document.getElementById("nm").value.trim().slice(0,40);save();render()}
+  if(b.id==='reset'){if(b.dataset.c){S={_n:S._n};save();render()}else{b.dataset.c=1;b.textContent='Toque de novo para confirmar'}}
+});
+document.addEventListener("change",function(e){
+  var id=e.target.dataset&&e.target.dataset.id;if(!id)return;
+  if(e.target.checked)S[id]=1;else delete S[id];
+  save();render();
+});
+render();
+
+setup();
+
+/* Chuva de código, só no cabeçalho */
+(function(){
+  if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  var c=document.getElementById("rain"),x=c.getContext("2d"),ch="アイウエオカキクケコサシスセソ01ABCDEF",f=14,cols,y=[];
+  function size(){c.width=c.offsetWidth;c.height=c.offsetHeight;cols=Math.ceil(c.width/f);y=[];for(var i=0;i<cols;i++)y.push(Math.random()*-20)}
+  size();window.addEventListener("resize",size);
+  setInterval(function(){
+    if(document.hidden)return;
+    x.fillStyle="rgba(0,0,0,.12)";x.fillRect(0,0,c.width,c.height);
+    x.fillStyle="#00ff66";x.font=f+"px monospace";
+    for(var i=0;i<cols;i++){
+      x.fillText(ch[Math.floor(Math.random()*ch.length)],i*f,y[i]*f);
+      if(y[i]*f>c.height&&Math.random()>.975)y[i]=0;
+      y[i]++;
+    }
+  },60);
+})();
+</script>
+</body>
+</html>
